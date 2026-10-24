@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huquqiy AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f1f5f9;font-family:Arial,sans-serif;color:#172033}
+header{background:#123b32;color:white;padding:24px 18px}
+header h2{margin:0 0 8px}
+main{padding:18px;max-width:700px;margin:auto}
+.card{background:white;padding:18px;border-radius:16px;margin-bottom:16px;box-shadow:0 2px 8px #0000000a}
+button{background:#176b52;color:white;border:0;padding:12px 15px;border-radius:9px;margin:4px;cursor:pointer}
+textarea{width:100%;min-height:120px;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font:16px Arial;resize:vertical}
+#answer{white-space:pre-wrap;line-height:1.6;overflow-wrap:anywhere}
+small{color:#64748b}
+#send{width:100%;margin:12px 0 0}
+</style>
+</head>
+<body>
+<header>
+<h2>⚖️ Huquqiy AI</h2>
+Huquqiy savollaringizga yordamchi
+</header>
+<main>
+<div class="card">
+<h3>Qaysi masalada yordam kerak?</h3>
+<button onclick="pick('Mehnat huquqi')">Mehnat huquqi</button>
+<button onclick="pick('Oila huquqi')">Oila huquqi</button>
+<button onclick="pick('Fuqarolik huquqi')">Fuqarolik huquqi</button>
+<button onclick="pick('Jinoyat huquqi')">Jinoyat huquqi</button>
+</div>
+<div class="card">
+<h3>Savolingizni yozing</h3>
+<textarea id="question" placeholder="Masalan: Mehnat ta’tili necha kun?"></textarea>
+<button id="send" onclick="sendQuestion()">Savolni yuborish</button>
+<p id="status" role="status"></p>
+</div>
+<div class="card">
+<h3>Javob</h3>
+<div id="answer">Javob shu yerda ko‘rinadi.</div>
+</div>
+<small>Javoblar umumiy huquqiy ma’lumotdir, professional yuridik maslahat o‘rnini bosmaydi.</small>
+</main>
+<script>
+const API_URL = '/api/chat';
+
+function pick(topic) {
+  const box = document.getElementById('question');
+  box.value = topic + ': ';
+  box.focus();
+}
+
+async function sendQuestion() {
+  const question = document.getElementById('question').value.trim();
+  const status = document.getElementById('status');
+  const answer = document.getElementById('answer');
+  const button = document.getElementById('send');
+
+  if (!question) {
+    status.textContent = 'Iltimos, avval savolingizni yozing.';
+    return;
+  }
+
+  button.disabled = true;
+  status.textContent = 'Javob tayyorlanmoqda...';
+  answer.textContent = '';
+
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({question})
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Server xatosi: ' + response.status);
+    }
+
+    answer.textContent = data.answer || 'API javob qaytarmadi.';
+    status.textContent = 'Tayyor.';
+  } catch (error) {
+    answer.textContent = 'Javob olishda xatolik yuz berdi.';
+    status.textContent = error.message +
+      ' Agar muammo davom etsa, Vercel API sozlamalarini tekshiring.';
+  } finally {
+    button.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
