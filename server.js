@@ -26,6 +26,10 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-app.listen(3000, '127.0.0.1', () => {
-  console.log('Sayt: http://127.0.0.1:3000');
-});
+if (require.main === module) {
+  app.listen(3000, '127.0.0.1', () => {
+    console.log('Sayt: http://127.0.0.1:3000');
+  });
+}
+
+module.exports = app;
