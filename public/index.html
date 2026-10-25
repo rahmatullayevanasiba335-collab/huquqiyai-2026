@@ -3,93 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Huquqiy AI</title>
+<meta name="theme-color" content="#102a27">
+<meta name="description" content="O‘zbekiston qonunchiligi bo‘yicha huquqiy ma'lumot olish yordamchisi.">
+<title>Huquqiy AI — Huquqiy yordamchi</title>
 <style>
+:root{--bg:#f4f7f6;--panel:#fff;--ink:#172d2a;--muted:#687b76;--green:#176b52;--line:#dfe8e4;--soft:#eaf4ef}
 *{box-sizing:border-box}
-body{margin:0;background:#f1f5f9;font-family:Arial,sans-serif;color:#172033}
-header{background:#123b32;color:white;padding:24px 18px}
-header h2{margin:0 0 8px}
-main{padding:18px;max-width:700px;margin:auto}
-.card{background:white;padding:18px;border-radius:16px;margin-bottom:16px;box-shadow:0 2px 8px #0000000a}
-button{background:#176b52;color:white;border:0;padding:12px 15px;border-radius:9px;margin:4px;cursor:pointer}
-textarea{width:100%;min-height:120px;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font:16px Arial;resize:vertical}
-#answer{white-space:pre-wrap;line-height:1.6;overflow-wrap:anywhere}
-small{color:#64748b}
-#send{width:100%;margin:12px 0 0}
+body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Arial,sans-serif;color:var(--ink)}
+button,textarea{font:inherit}
+button{cursor:pointer}
+.top{background:linear-gradient(135deg,#102a27,#176b52);color:white;padding:24px 18px 30px}
+.topinner{max-width:900px;margin:auto}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;border-radius:15px;background:#ffffff1c;display:grid;place-items:center;font-size:27px}
+.brand h1{font-size:23px;margin:0}
+.brand p{margin:4px 0 0;color:#d4e8df;font-size:13px}
+.hero{margin-top:24px}
+.hero h2{font-size:clamp(24px,5vw,35px);line-height:1.2;margin:0 0 9px}
+.hero p{margin:0;color:#d4e8df;line-height:1.6}
+main{max-width:900px;margin:-12px auto 0;padding:0 14px 35px;position:relative}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:15px;box-shadow:0 5px 20px #17382b08}
+h3{font-size:17px;margin:0 0 14px}
+.muted{color:var(--muted);font-size:13px;line-height:1.6}
+.topics{display:flex;flex-wrap:wrap;gap:8px}
+.topic{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 13px;color:var(--ink);font-size:13px}
+.topic:active,.topic:hover{background:var(--soft);border-color:#9bc7b3}
+textarea{display:block;width:100%;min-height:125px;resize:vertical;border:1px solid #cbdad3;border-radius:13px;padding:14px;background:#fcfefd;color:var(--ink);outline:none}
+textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px #176b5218}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}
+.primary,.secondary{border:0;border-radius:11px;padding:12px 16px}
+.primary{background:var(--green);color:white;flex:1;font-weight:650}
+.primary:disabled{opacity:.6;cursor:wait}
+.secondary{background:var(--soft);color:var(--green)}
+.answerhead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#answer{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8;font-size:15px}
+#answer.empty{color:var(--muted)}
+#status{font-size:13px;color:var(--muted);margin:12px 0 0}
+.history{display:flex;flex-direction:column;gap:8px}
+.historyitem{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px;background:white}
+.historyitem button{border:0;background:transparent;color:var(--ink);text-align:left;overflow-wrap:anywhere;flex:1}
+.historyitem .del{flex:0;color:#a33;padding:4px}
+footer{text-align:center;color:var(--muted);font-size:12px;line-height:1.7;padding:5px 18px 25px}
+.hidden{display:none!important}
+@media(min-width:700px){.layout{display:grid;grid-template-columns:1fr 280px;gap:15px;align-items:start}.card{padding:23px}}
+@media(max-width:420px){.top{padding:20px 16px 26px}.brand h1{font-size:21px}.card{padding:16px}.topic{padding:9px 11px}.primary,.secondary{padding:12px}}
 </style>
 </head>
 <body>
-<header>
-<h2>⚖️ Huquqiy AI</h2>
-Huquqiy savollaringizga yordamchi
+<header class="top">
+ <div class="topinner">
+  <div class="brand">
+   <div class="logo" aria-hidden="true">⚖️</div>
+   <div><h1>Huquqiy AI</h1><p>Huquqiy savollaringiz uchun yordamchi</p></div>
+  </div>
+  <div class="hero">
+   <h2>Huquqlaringizni<br>yaxshiroq tushuning.</h2>
+   <p>O‘zbekiston qonunchiligi bo‘yicha savolingizni yozing va tushunarli javob oling.</p>
+  </div>
+ </div>
 </header>
 <main>
-<div class="card">
-<h3>Qaysi masalada yordam kerak?</h3>
-<button onclick="pick('Mehnat huquqi')">Mehnat huquqi</button>
-<button onclick="pick('Oila huquqi')">Oila huquqi</button>
-<button onclick="pick('Fuqarolik huquqi')">Fuqarolik huquqi</button>
-<button onclick="pick('Jinoyat huquqi')">Jinoyat huquqi</button>
-</div>
-<div class="card">
-<h3>Savolingizni yozing</h3>
-<textarea id="question" placeholder="Masalan: Mehnat ta’tili necha kun?"></textarea>
-<button id="send" onclick="sendQuestion()">Savolni yuborish</button>
-<p id="status" role="status"></p>
-</div>
-<div class="card">
-<h3>Javob</h3>
-<div id="answer">Javob shu yerda ko‘rinadi.</div>
-</div>
-<small>Javoblar umumiy huquqiy ma’lumotdir, professional yuridik maslahat o‘rnini bosmaydi.</small>
+ <div class="layout">
+  <section>
+   <div class="card">
+    <h3>Qaysi masalada yordam kerak?</h3>
+    <div class="topics">
+     <button class="topic" data-topic="Mehnat huquqi">💼 Mehnat huquqi</button>
+     <button class="topic" data-topic="Oila huquqi">👨‍👩‍👧 Oila huquqi</button>
+     <button class="topic" data-topic="Fuqarolik huquqi">🏠 Fuqarolik huquqi</button>
+     <button class="topic" data-topic="Jinoyat huquqi">⚖️ Jinoyat huquqi</button>
+     <button class="topic" data-topic="Iste'molchilar huquqi">🛍️ Iste'molchi huquqi</button>
+     <button class="topic" data-topic="Ta'lim huquqi">🎓 Ta'lim huquqi</button>
+    </div>
+   </div>
+   <div class="card">
+    <h3>Savolingizni yozing</h3>
+    <textarea id="question" maxlength="5000" placeholder="Masalan: Ish beruvchi ta'til bermasa nima qilishim mumkin?" aria-label="Huquqiy savolingiz"></textarea>
+    <div class="actions">
+     <button class="primary" id="send">Savolni yuborish →</button>
+     <button class="secondary" id="clear">Tozalash</button>
+    </div>
+    <p id="status" role="status" aria-live="polite"></p>
+   </div>
+   <div class="card">
+    <div class="answerhead">
+     <h3>Javob</h3>
+     <button class="secondary" id="copy">Nusxalash</button>
+    </div>
+    <div id="answer" class="empty" aria-live="polite">Savolingizga javob shu yerda ko‘rinadi.</div>
+   </div>
+  </section>
+  <aside class="card">
+   <h3>🕘 Suhbatlar tarixi</h3>
+   <p class="muted">Tarix faqat shu qurilmangiz brauzerida saqlanadi.</p>
+   <div id="history" class="history"></div>
+   <button id="clearHistory" class="secondary" style="margin-top:12px;width:100%">Tarixni tozalash</button>
+  </aside>
+ </div>
 </main>
+<footer>
+ Javoblar umumiy huquqiy ma'lumot uchun mo‘ljallangan va professional yuridik maslahat o‘rnini bosmaydi. Muhim qaror oldidan amaldagi qonunchilikni rasmiy manbalardan tekshiring.
+</footer>
 <script>
-const API_URL = '/api/chat';
+const API_URL='/api/chat';
+const $=id=>document.getElementById(id);
+const question=$('question'),answer=$('answer'),status=$('status'),send=$('send');
+const STORAGE_KEY='huquqiyai_history_v1';
+let historyItems=[];
+try{historyItems=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');if(!Array.isArray(historyItems))historyItems=[];}catch{historyItems=[];}
 
-function pick(topic) {
-  const box = document.getElementById('question');
-  box.value = topic + ': ';
-  box.focus();
+function saveHistory(){
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify(historyItems.slice(0,30)));}
+ catch{status.textContent='Brauzer tarixni saqlay olmadi. Javobni nusxalab oling.';}
+ renderHistory();
 }
-
-async function sendQuestion() {
-  const question = document.getElementById('question').value.trim();
-  const status = document.getElementById('status');
-  const answer = document.getElementById('answer');
-  const button = document.getElementById('send');
-
-  if (!question) {
-    status.textContent = 'Iltimos, avval savolingizni yozing.';
-    return;
-  }
-
-  button.disabled = true;
-  status.textContent = 'Javob tayyorlanmoqda...';
-  answer.textContent = '';
-
-  try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({question})
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || 'Server xatosi: ' + response.status);
-    }
-
-    answer.textContent = data.answer || 'API javob qaytarmadi.';
-    status.textContent = 'Tayyor.';
-  } catch (error) {
-    answer.textContent = 'Javob olishda xatolik yuz berdi.';
-    status.textContent = error.message +
-      ' Agar muammo davom etsa, Vercel API sozlamalarini tekshiring.';
-  } finally {
-    button.disabled = false;
-  }
+function renderHistory(){
+ const box=$('history');box.replaceChildren();
+ if(!historyItems.length){const p=document.createElement('p');p.className='muted';p.textContent='Hozircha suhbat yo‘q.';box.append(p);}
+ historyItems.slice(0,15).forEach((item,index)=>{
+  const row=document.createElement('div');row.className='historyitem';
+  const open=document.createElement('button');open.textContent=item.question;open.addEventListener('click',()=>{question.value=item.question;answer.textContent=item.answer;answer.classList.remove('empty');status.textContent='Saqlangan suhbat ochildi.';});
+  const del=document.createElement('button');del.className='del';del.textContent='×';del.setAttribute('aria-label','Suhbatni o‘chirish');del.addEventListener('click',()=>{historyItems.splice(index,1);saveHistory();});
+  row.append(open,del);box.append(row);
+ });
 }
+document.querySelectorAll('[data-topic]').forEach(button=>button.addEventListener('click',()=>{question.value=button.dataset.topic+': ';question.focus();}));
+$('clear').addEventListener('click',()=>{question.value='';question.focus();});
+$('clearHistory').addEventListener('click',()=>{if(confirm('Barcha saqlangan suhbatlarni o‘chirasizmi?')){historyItems=[];saveHistory();}});
+$('copy').addEventListener('click',async()=>{
+ const text=answer.textContent;
+ if(!text||answer.classList.contains('empty')){status.textContent='Avval javob oling.';return;}
+ try{await navigator.clipboard.writeText(text);status.textContent='Javob nusxalandi.';}
+ catch{const range=document.createRange();range.selectNodeContents(answer);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);status.textContent='Matnni belgiladik. Nusxalash buyrug‘idan foydalaning.';}
+});
+question.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter')sendQuestion();});
+send.addEventListener('click',sendQuestion);
+
+async function sendQuestion(){
+ const text=question.value.trim();
+ if(!text){status.textContent='Iltimos, avval savolingizni yozing.';question.focus();return;}
+ send.disabled=true;status.textContent='Javob tayyorlanmoqda...';answer.textContent='';answer.classList.remove('empty');
+ try{
+  const response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:text})});
+  let data;try{data=await response.json();}catch{throw new Error('Server tushunarsiz javob qaytardi.');}
+  if(!response.ok)throw new Error(data.error||'Server xatosi: '+response.status);
+  const result=typeof data.answer==='string'&&data.answer.trim()?data.answer:'API javob qaytarmadi.';
+  answer.textContent=result;status.textContent='Javob tayyor.';
+  historyItems.unshift({question:text,answer:result,date:new Date().toISOString()});
+  historyItems=historyItems.slice(0,30);saveHistory();
+ }catch(error){answer.textContent='Javob olishda xatolik yuz berdi.';status.textContent=error.message+' Qayta urinib ko‘ring.';}
+ finally{send.disabled=false;}
+}
+renderHistory();
 </script>
 </body>
 </html>
