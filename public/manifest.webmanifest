@@ -1,0 +1,13 @@
+{
+  "name": "Huquqiy AI",
+  "short_name": "Huquqiy AI",
+  "id": "huquqiyai",
+  "description": "O‘zbekiston qonunchiligi bo‘yicha huquqiy ma'lumot olish yordamchisi.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#102A27",
+  "dir": "ltr",
+  "orientation": "any"
+}
