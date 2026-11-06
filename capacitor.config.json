@@ -1,0 +1,9 @@
+{
+  "appId": "uz.huquqiyai.app",
+  "appName": "Huquqiy AI",
+  "webDir": "www",
+  "server": {
+    "url": "https://huquqiyai-2026.vercel.app",
+    "cleartext": false
+  }
+}

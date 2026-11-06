@@ -1,0 +1,11 @@
+node_modules/
+.gradle/
+**/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+*.jks
+*.keystore
+google-services.json
+.git-old/
